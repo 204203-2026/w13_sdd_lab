@@ -33,7 +33,7 @@ bonus() {
 SETUP_MISSING=0
 if { [ ! -f .venv/bin/python ] && [ ! -f .venv/Scripts/python.exe ]; } ||
    ! uv run --offline --frozen --no-sync python -c 'import fastapi, httpx, pytest'; then
-  echo "SETUP MISSING: run bash init.sh once on a working connection, then rerun bash check.sh"
+  echo "SETUP MISSING: run bash init.sh once on a working connection, then rerun bash check.sh. Why: setup downloads tools for offline checks."
   SETUP_MISSING=1
 fi
 required contract_intact 0

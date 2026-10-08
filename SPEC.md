@@ -4,7 +4,7 @@
 TODO: describe the goal in one or two sentences.
 
 ## Acceptance criteria
-<!-- Example only, for a different toy feature: AC-01: GET /api/ping returns 200 and JSON {"pong": true}. -->
+<!-- Example for a different toy feature: AC-01: GET /api/ping returns 200 and JSON {"pong": true}. Replace this example. Why: the notes app has different requirements. -->
 - AC-01: <your first checkable sentence>
 - AC-02: <your second checkable sentence>
 - AC-03: <your third checkable sentence>

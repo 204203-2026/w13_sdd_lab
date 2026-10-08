@@ -3,12 +3,12 @@ ROOT=$(cd "$(dirname "$0")" && pwd)
 cd "$ROOT" || exit 1
 conflicted=$(git diff --name-only --diff-filter=U)
 if [ -n "$conflicted" ]; then
-  printf "Resolve conflicts in:\n%s\nThen git add the resolved files and run bash submit.sh again.\n" "$conflicted"
+  printf "git could not combine two versions of these files. Edit them to keep the intended content:\n%s\nThen git add the edited files and run bash submit.sh again. Why: git needs your chosen content before submission.\n" "$conflicted"
   exit 1
 fi
 bash check.sh
 if ! uv run --offline --frozen --no-sync python grader/gate.py; then
-  echo "WARNING: required gate failed. Partial work will still be submitted; inspect results/report.json."
+  echo "WARNING: required checks did not all pass. submit.sh will still submit partial work. Read results/report.json. Why: it shows earned points and missing work."
 fi
 git add -A || exit 1
 if ! git diff --cached --quiet; then
@@ -16,11 +16,11 @@ if ! git diff --cached --quiet; then
 fi
 branch=$(git branch --show-current)
 if [ -z "$branch" ]; then
-  echo "Detached HEAD: run git switch main (or your branch), then rerun bash submit.sh."
+  echo "Detached HEAD: run git switch main (or your branch), then rerun bash submit.sh. Why: you are viewing a saved commit; submission needs a named branch."
   exit 1
 fi
 if [ "$branch" != main ] && [ "$branch" != master ]; then
-  echo "WARNING: CI grades main. You are on '$branch'. To grade this work: git switch main && git merge $branch, then rerun bash submit.sh."
+  echo "WARNING: CI grades main or master, depending on your repository. You are on '$branch'. To grade this work: git switch main && git merge $branch, then rerun bash submit.sh."
 fi
 git fetch origin || exit 1
 if git rev-parse --verify "refs/remotes/origin/$branch" >/dev/null 2>&1 &&
@@ -33,12 +33,12 @@ if git rev-parse --verify "refs/remotes/origin/$branch" >/dev/null 2>&1 &&
       case "$file" in results/*) ;; *) other+=("$file") ;; esac
     done < <(git diff --name-only --diff-filter=U)
     if [ "${#conflicts[@]}" -eq 0 ]; then
-      echo "Pull failed. Inspect git status and your connection, then run bash submit.sh again."
+      echo "Pull failed. Inspect git status and your connection, then run bash submit.sh again. Why: submission must include GitHub changes before sending yours."
       exit 1
     fi
     if [ "${#other[@]}" -gt 0 ]; then
       printf 'Conflicting files: %s\n' "${conflicts[@]}"
-      echo "Please resolve them, git add the resolved files and run bash submit.sh again."
+      echo "Edit each listed file to keep the intended content. git add the edited files and run bash submit.sh again. Why: git cannot combine these versions automatically."
       exit 1
     fi
     for file in "${conflicts[@]}"; do
@@ -62,8 +62,8 @@ for tag in spec-draft spec-frozen tests-red; do
   fi
 done
 git push --atomic -u origin "$branch" "${tags[@]}" || {
-  echo "Push failed. Check git remote -v and your connection, then run bash submit.sh again."
+  echo "Push failed. Check git remote -v and your connection, then run bash submit.sh again. Why: git remote -v shows which repository receives your work."
   exit 1
 }
 
-if [ "${#tags[@]}" -gt 0 ]; then echo "Moved remote checkpoint tags to this attempt."; fi
+if [ "${#tags[@]}" -gt 0 ]; then echo "submit.sh updated checkpoint tags on GitHub to use this attempt."; fi
