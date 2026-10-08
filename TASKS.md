@@ -277,6 +277,9 @@ Troubleshooting:
 
 ## Part 5 — Let the agent implement (45 minutes)
 
+Before you start, check that Superpowers is installed and loaded: `bash check_superpowers.sh`.
+It is worth 0 points and saves `results/superpowers_check.txt`. Add `--probe` to also ask Codex to name its skills.
+
 Give Codex this prompt after the failing-test checkpoint is saved. TDD means writing
 failing tests first, then adding code until they pass.
 
