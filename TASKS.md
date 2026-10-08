@@ -108,7 +108,7 @@ That shows the shape; your notes spec needs at least five ACs.
   These include case for choosing a flag, if checks, and command exit values.
 - Why:
   - The grader needs proof that the spec came before the tests and the tests before the code.
-  - A commit can be rewritten, so the script also saves a fingerprint of the spec.
+  - The script also saves a fingerprint of the spec. It shows the grader if SPEC.md changed after the freeze.
   - The agent must not change the requirements to make its code pass.
 - Why the draft checkpoint comes BEFORE the review: the AI writes REVIEW.md; you edit SPEC.md.
   The saved draft shows those edits. You can return to it if the advice was bad.
@@ -199,7 +199,6 @@ What it does:
 Why:
 
 - The grader needs proof of the spec, tests, code order.
-- A commit can be rewritten, so the script saves a spec fingerprint too.
 - The agent must not change the requirements to make its code pass.
 
 Full box: Part 1.
@@ -292,7 +291,8 @@ Before you start, check its installation: `bash check_superpowers.sh`. Why: the 
 It is worth 0 points and saves `results/superpowers_check.txt`. A skill is a set of instructions Codex can follow.
 Add `--probe` to also ask Codex to name its skills. Why: installed files alone do not prove a session can use them.
 
-Give Codex this prompt after the failing-test checkpoint is saved. TDD means writing
+Open Codex in this lab folder the way you did in Week 12 (the `codex` command here, or the Codex app with this folder open).
+Then give Codex this prompt after the failing-test checkpoint is saved. TDD means writing
 failing tests first, then adding code until they pass.
 
 ```text

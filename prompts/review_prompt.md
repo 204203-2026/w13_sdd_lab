@@ -24,6 +24,6 @@ and the result a test should check. Why: concrete cases help the student write u
 Say whether the spec is ready to freeze and which small changes come first. Why: the student needs a clear decision.
 
 The student will revise the spec and record AC-linked changes in Changes after review.
-Review only; leave the student's files unchanged. Why: the student decides which advice to apply.
+Review only: do not change the student's files, except writing REVIEW.md. Why: the student decides which advice to apply.
 
 Use plain straight quotes only. Why: students must be able to copy code examples without changing quote characters.
