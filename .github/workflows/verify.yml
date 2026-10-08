@@ -1,0 +1,65 @@
+name: Grade w13_sdd_lab
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: grade-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch the pinned template grader
+        continue-on-error: true
+        uses: actions/checkout@v4
+        with:
+          repository: 204203-2026/w13_sdd_lab
+          ref: grader-v2
+          path: .w13-template
+      - name: Grade with the pinned template grader when available
+        run: |
+          if [ -f .w13-template/grader/check.py ]; then
+            for file in grader grading check.sh init.sh pyproject.toml uv.lock tests/conftest.py; do
+              if [ -e "$file" ]; then cp -a "$file" "$file.bak_$(date +%s)"; fi
+            done
+            rm -rf grader grading
+            cp -R .w13-template/grader .w13-template/grading .
+            cp .w13-template/check.sh .w13-template/init.sh .w13-template/pyproject.toml .w13-template/uv.lock .
+            mkdir -p tests && cp .w13-template/tests/conftest.py tests/conftest.py
+            echo "Using template grader at grader-v2"
+          else
+            echo "::warning::Template grader unavailable; grading with this repository's copy."
+          fi
+      - run: git fetch --tags
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.13'
+      - name: Prepare optional browser (unavailable means TODO)
+        run: |
+          if uvx --from playwright==1.55.0 --with httpx==0.28.1 --with fastapi==0.116.1 --with uvicorn==0.35.0 playwright install --with-deps chromium; then
+            echo "W13_BROWSER_READY=1" >> "$GITHUB_ENV"
+          fi
+      - name: Initialize and recompute feedback results
+        run: |
+          bash init.sh || echo "init failed; continuing to record required failures"
+          bash check.sh
+          cat results/report.json
+      - name: Commit feedback results
+        if: always()
+        run: |
+          git add results/report.json results/challenge_report.json
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "ci: sync grading feedback results [skip ci]" -m "Recompute required and optional checks from submitted history."
+          git push origin "HEAD:${GITHUB_REF_NAME}" || echo "::notice::Branch moved during grading; the newer run commits its own results."
+      - name: Enforce every required check and contract gate
+        if: always()
+        run: uv run --offline --frozen --no-sync python grader/gate.py

@@ -1,0 +1,5 @@
+POST /api/notes
+GET /api/notes
+DELETE /api/notes/{id}
+POST /api/notes invalid title
+GET /api/health

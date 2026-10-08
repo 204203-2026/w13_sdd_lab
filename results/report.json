@@ -1,0 +1,96 @@
+{
+  "score": 0,
+  "total": 20,
+  "results": [
+    {
+      "name": "contract_intact",
+      "status": "pass",
+      "points": 0,
+      "max": 0
+    },
+    {
+      "name": "impl_original",
+      "status": "pass",
+      "points": 0,
+      "max": 0
+    },
+    {
+      "name": "spec_sections",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "spec_acs",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "review_file",
+      "status": "fail",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "review_crossref",
+      "status": "fail",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "review_applied",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "spec_frozen",
+      "status": "fail",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "ac_test_map",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "red_evidence",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "tests_green",
+      "status": "fail",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "grader_api",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "ui_static",
+      "status": "fail",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "tests_pass_correct",
+      "status": "fail",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "tests_catch_wrong",
+      "status": "fail",
+      "points": 0,
+      "max": 2
+    }
+  ]
+}

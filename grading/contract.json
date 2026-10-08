@@ -1,0 +1,75 @@
+{
+  "endpoints": [
+    {
+      "id": "EP-1",
+      "method": "POST",
+      "path": "/api/notes",
+      "body": [
+        "title",
+        "body"
+      ],
+      "status": 201,
+      "response": [
+        "id",
+        "title",
+        "body",
+        "created_at"
+      ]
+    },
+    {
+      "id": "EP-2",
+      "method": "GET",
+      "path": "/api/notes",
+      "status": 200
+    },
+    {
+      "id": "EP-3",
+      "method": "DELETE",
+      "path": "/api/notes/{id}",
+      "status": 204,
+      "missing": 404
+    },
+    {
+      "id": "EP-4",
+      "method": "POST",
+      "path": "/api/notes",
+      "invalid": 422
+    },
+    {
+      "id": "EP-5",
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "fields": [
+        "status",
+        "spec"
+      ]
+    }
+  ],
+  "ui": [
+    {
+      "id": "UI-1",
+      "testid": "note-form"
+    },
+    {
+      "id": "UI-2",
+      "testid": "note-title"
+    },
+    {
+      "id": "UI-3",
+      "testid": "note-list"
+    },
+    {
+      "id": "UI-4",
+      "testid": "note-item"
+    },
+    {
+      "id": "UI-5",
+      "testid": "note-delete"
+    },
+    {
+      "id": "UI-6",
+      "testid": "note-error"
+    }
+  ]
+}

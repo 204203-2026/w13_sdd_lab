@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+results/.backup.*
+results/*.bak_*
+*.bak_*
+_old/
+qa/
+HANDOFF.md
+.DS_Store
+*.swp
+*~
+.w13-template/

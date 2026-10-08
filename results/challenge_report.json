@@ -1,0 +1,30 @@
+{
+  "bonus": 0,
+  "bonus_total": 6,
+  "results": [
+    {
+      "name": "ui_behaviour",
+      "status": "todo",
+      "points": 0,
+      "max": 2
+    },
+    {
+      "name": "edge_case_tests",
+      "status": "todo",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "review_round2",
+      "status": "todo",
+      "points": 0,
+      "max": 1
+    },
+    {
+      "name": "deployed",
+      "status": "todo",
+      "points": 0,
+      "max": 2
+    }
+  ]
+}

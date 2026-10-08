@@ -1,0 +1,32 @@
+name: Challenge (bonus) — w13_sdd_lab
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  challenge:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: git fetch --tags
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: '3.13'
+      - run: bash init.sh
+      - name: Prepare optional browser (unavailable means TODO)
+        run: |
+          if uvx --from playwright==1.55.0 --with httpx==0.28.1 --with fastapi==0.116.1 --with uvicorn==0.35.0 playwright install --with-deps chromium; then
+            echo "W13_BROWSER_READY=1" >> "$GITHUB_ENV"
+          fi
+      - run: bash check.sh && cat results/challenge_report.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: bonus-browser-report
+          path: results/challenge_report.json
