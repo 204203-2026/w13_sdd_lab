@@ -30,10 +30,11 @@ SPEC.md uses Goal, Acceptance criteria, Edge cases, and Out of scope.
 Extra sections are allowed and ignored. Goal must be non-empty. Edge cases and
 Out of scope each need at least one non-placeholder bullet.
 
-Write at least five acceptance criteria inside Acceptance criteria, each as a
-`- AC-NN:` line with at least 30 characters in the sentence after `AC-NN:`. IDs start at 01 and continue without
-gaps or duplicates. `AC-1` and `AC-01` are equivalent; `*` bullets, heading case,
-trailing colons/spaces, and CRLF are accepted. Avoid TODO, lorem, and `<your ...>`.
+Write at least five acceptance criteria under Acceptance criteria.
+Start each one with `- AC-NN:` and write at least 30 characters after `AC-NN:`.
+IDs start at 01 and continue with no gaps and no duplicates.
+`AC-1` and `AC-01` count the same. `*` bullets, heading case, trailing colons or spaces, and CRLF are accepted.
+Do not leave TODO, lorem, or `<your ...>` in the spec.
 Contract tags such as `[EP-1]` are optional; any used EP/UI tag must exist above.
 There is no all-IDs coverage requirement or separate spec API-table check.
 
@@ -42,15 +43,15 @@ Each `test_ac_NN_...` function needs an `assert` and a call through `client`. Ei
 may be in the test itself or in a helper the test calls directly; name that helper's
 parameter `client`. The grader follows one helper level only. Path constants are
 allowed; literal methods, paths, and testid strings are not required for mapping.
-Actual API and UI correctness is checked separately by probes and oracle runs.
+The grader also sends real requests to your app and runs your tests against instructor apps.
 REVIEW.md cites at least two distinct existing AC IDs and has Ambiguities,
 Missing edge cases, and Verdict headings, with two bullets in the first two.
 Changes after review records an AC-linked change. Checkpoints retain the original
 review/process evidence requirements.
 
-contract_intact verifies pinned contract, fixture, oracle files, and the pin manifest.
-impl_original compares app/main.py AST with every oracle after removing docstrings and normalising identifiers.
-A failed gate zeroes grader_api, ui_static, tests_pass_correct, tests_catch_wrong.
+contract_intact checks that the fixed contract and the instructor files are unchanged.
+impl_original checks that app/main.py is your own work, not a renamed copy of an instructor app.
+If a protection check fails, these four checks earn zero points: grader_api, ui_static, tests_pass_correct, tests_catch_wrong.
 Partial mutant credit is 0.5 for each wrong implementation caught by a failed test;
 collection/import errors do not earn mutant credit. Gate requires all 20 points
 and all zero-point gates passing. Bonus never controls CI's required gate.
